@@ -132,11 +132,13 @@ class ContextGuardian:
             result = subprocess.run(
                 ["openclaw", "compact"],
                 capture_output=True,
+                text=True,
                 timeout=self.config.compaction_timeout,
                 check=False,
             )
             if result.returncode != 0:
-                self.logger.error(f"Compaction failed: {result.stderr.decode()}")
+                err_msg = result.stderr if result.stderr else "Unknown error"
+                self.logger.error(f"Compaction failed: {err_msg}")
                 return False
 
             self.logger.info("Compaction completed successfully")
