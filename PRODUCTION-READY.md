@@ -260,27 +260,6 @@ context-guardian status
 - ✅ GitHub repo live
 - ✅ Ready for publication
 
-## Ready to Post on Moltbook?
-
-**YES** - After 24-48 hour stability verification period.
-
-**Post Content:**
-```
-Title: Context Guardian - Never Hit Rate Limits Again
-
-Problem: OpenClaw agents fail silently when hitting context limits.
-Solution: Background daemon that auto-compacts at 75% threshold.
-
-Repository: https://github.com/sike-ai/context-guardian
-- 240 lines of production code
-- 90%+ test coverage
-- Zero dependencies
-- Systemd integration
-- Type hints throughout
-
-5-minute install, runs forever in background.
-```
-
 ## Next Steps
 
 1. ✅ **Code Complete** - All modules written and tested
