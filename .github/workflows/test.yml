@@ -35,18 +35,15 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          python -m pytest tests/ -v \
+          python -m pytest tests/ \
             --cov=src/context_guardian \
-            --cov-report=xml:coverage.xml \
+            --cov-report=xml \
             --cov-report=term-missing \
-            --cov-report=html \
-            --tb=short
+            --cov-report=html
 
-      - name: Display coverage summary
-        if: always()
+      - name: Check coverage meets minimum (90%)
         run: |
-          echo "=== Coverage Report ==="
-          cat coverage.xml | grep -A5 "coverage" || echo "Coverage file not found"
+          python -m coverage report --fail-under=90
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -54,6 +51,5 @@ jobs:
         with:
           file: ./coverage.xml
           flags: unittests
-          name: codecov-umbrella
+          name: pytest
           fail_ci_if_error: false
-          verbose: true
