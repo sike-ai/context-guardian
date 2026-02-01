@@ -1,10 +1,8 @@
 """Context Guardian daemon - proactive context management."""
 
 import json
-import logging
 import subprocess
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
 from context_guardian.config import Config
@@ -63,7 +61,7 @@ class ContextGuardian:
         """
         try:
             result = subprocess.run(
-                ["openclaw", "status"],
+                ["openclaw", "status"],  # noqa: S607
                 capture_output=True,
                 text=True,
                 timeout=self.config.openclaw_timeout,
@@ -99,8 +97,7 @@ class ContextGuardian:
         self._save_history()
 
         self.logger.info(
-            f"Context: {usage.percentage}% "
-            f"({usage.used_tokens}/{usage.limit_tokens} tokens)"
+            f"Context: {usage.percentage}% ({usage.used_tokens}/{usage.limit_tokens} tokens)"
         )
 
         # Check if compaction needed
@@ -130,7 +127,7 @@ class ContextGuardian:
         """
         try:
             result = subprocess.run(
-                ["openclaw", "compact"],
+                ["openclaw", "compact"],  # noqa: S607
                 capture_output=True,
                 text=True,
                 timeout=self.config.compaction_timeout,

@@ -2,7 +2,12 @@
 
 import pytest
 
-from context_guardian.parser import ContextLevel, ContextUsage, parse_openclaw_status, parse_token_count
+from context_guardian.parser import (
+    ContextLevel,
+    ContextUsage,
+    parse_openclaw_status,
+    parse_token_count,
+)
 
 
 class TestTokenParsing:

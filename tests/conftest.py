@@ -1,6 +1,5 @@
 """Pytest configuration and fixtures."""
 
-import json
 import tempfile
 from pathlib import Path
 from typing import Generator
@@ -13,7 +12,7 @@ from context_guardian.config import Config
 @pytest.fixture
 def temp_files() -> Generator[dict, None, None]:
     """Create temporary files for testing."""
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with tempfile.TemporaryDirectory(prefix="context-guardian-test-") as tmpdir:
         tmppath = Path(tmpdir)
         yield {
             "history": tmppath / "history.json",

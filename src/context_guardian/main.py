@@ -1,7 +1,6 @@
 """Command-line interface for Context Guardian."""
 
 import argparse
-import json
 import sys
 from typing import Optional
 

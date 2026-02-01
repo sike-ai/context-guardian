@@ -1,8 +1,11 @@
 """Configuration management for Context Guardian."""
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+
+# Use XDG_RUNTIME_DIR for runtime files (Linux/macOS best practice), fallback to /tmp
+_RUNTIME_DIR = Path(os.environ.get("XDG_RUNTIME_DIR", "/tmp"))  # noqa: S108
 
 
 @dataclass
@@ -15,11 +18,11 @@ class Config:
     check_interval: int = 300
     """Check interval in seconds. Default: 300 (5 minutes)."""
 
-    history_file: Path = Path("/tmp/context-guardian.json")
-    """File to store check history. Default: /tmp/context-guardian.json."""
+    history_file: Path = _RUNTIME_DIR / "context-guardian" / "history.json"
+    """File to store check history."""
 
-    state_file: Path = Path("/tmp/context-guardian-state.json")
-    """File to store transient state. Default: /tmp/context-guardian-state.json."""
+    state_file: Path = _RUNTIME_DIR / "context-guardian" / "state.json"
+    """File to store transient state."""
 
     log_level: str = "INFO"
     """Logging level. Options: DEBUG, INFO, WARNING, ERROR. Default: INFO."""
