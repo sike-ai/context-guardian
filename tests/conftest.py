@@ -2,7 +2,7 @@
 
 import tempfile
 from pathlib import Path
-from typing import Generator
+from typing import Any, Dict, Generator
 
 import pytest
 
@@ -10,7 +10,7 @@ from context_guardian.config import Config
 
 
 @pytest.fixture
-def temp_files() -> Generator[dict, None, None]:
+def temp_files() -> Generator[Dict[str, Any], None, None]:
     """Create temporary files for testing."""
     with tempfile.TemporaryDirectory(prefix="context-guardian-test-") as tmpdir:
         tmppath = Path(tmpdir)
@@ -21,7 +21,7 @@ def temp_files() -> Generator[dict, None, None]:
 
 
 @pytest.fixture
-def config(temp_files: dict) -> Config:
+def config(temp_files: Dict[str, Any]) -> Config:
     """Create test configuration."""
     return Config(
         threshold=75,
