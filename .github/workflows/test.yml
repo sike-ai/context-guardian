@@ -21,11 +21,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Verify Python setup
+      - name: Verify Python ${{ matrix.python-version }} setup
         run: |
-          echo "Python version: $(python --version)"
-          echo "Python executable: $(which python)"
-          echo "Pip version: $(python -m pip --version)"
+          echo "=== Python Setup Verification ==="
+          python --version
+          which python
+          python -m pip --version
+          echo "✅ Python ${{ matrix.python-version }} environment ready"
 
       - name: Install dependencies
         run: |
@@ -39,11 +41,25 @@ jobs:
             --cov=src/context_guardian \
             --cov-report=xml \
             --cov-report=term-missing \
-            --cov-report=html
+            --cov-report=html \
+            --cov-fail-under=90
 
-      - name: Check coverage meets minimum (90%)
+      - name: Report test results
+        if: always()
         run: |
-          python -m coverage report --fail-under=90
+          echo "=== Test Results Summary ==="
+          echo "Python Version: ${{ matrix.python-version }}"
+          echo "Status: Tests completed"
+          if [ -f coverage.xml ]; then
+            echo "Coverage XML: ✅ Generated"
+          else
+            echo "Coverage XML: ❌ Not found"
+          fi
+          if [ -d htmlcov ]; then
+            echo "Coverage HTML: ✅ Generated"
+          else
+            echo "Coverage HTML: ❌ Not generated"
+          fi
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -51,5 +67,5 @@ jobs:
         with:
           file: ./coverage.xml
           flags: unittests
-          name: pytest
+          name: python-${{ matrix.python-version }}
           fail_ci_if_error: false
